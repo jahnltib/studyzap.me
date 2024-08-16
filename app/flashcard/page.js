@@ -13,6 +13,7 @@ export default function Flashcard() {
   const [flipped, setFlipped] = useState({});
   const searchParams = useSearchParams();
   const search = searchParams.get("id");
+
   useEffect(() => {
     async function getFlashcard() {
       if (!search || !user) return;
@@ -55,12 +56,10 @@ export default function Flashcard() {
     setFlipped({});
   };
 
+  /* Should redirect to sign-in page if not logged in.
+                   Should show a loading indicator if not signed in. */
   if (!isLoaded || !isSignedIn) {
     return <RedirectToSignIn />;
-    {
-      /* Should redirect to sign-in page if not logged in.
-                     Should show a loading indicator if not signed in. */
-    }
   }
 
   const currentFlashcard = flashcards[currentCardIndex];
