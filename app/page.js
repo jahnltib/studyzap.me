@@ -1,11 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { AppBar, Toolbar, Typography, Box, Button, Grid } from "@mui/material";
 import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
+
 import getStripe from "../utils/get-stripe";
 
 const Home = () => {
+  const router = useRouter();
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
+
+  useEffect(() => {
+    if (isLoaded) {
+      router.push("/dashboard");
+      return;
+    }
+  }, []);
+
   const handleSubmit = async () => {
     try {
       const checkoutSession = await fetch("/api/checkout_session", {

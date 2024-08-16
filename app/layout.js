@@ -11,9 +11,9 @@ const archivo = Archivo({ subsets: ["latin"] });
 import Navbar from "./components/Navbar";
 export const metadata = {
   title: "AI Flashcards - StudyZap",
-  description: "AI Flashcard Creator. Need to cram for a test? Generate flashcards in a flash with Studyzap. Upload text, PDFs, or take a picture of your notes and generate custom flashcards with the power of AI."
+  description:
+    "AI Flashcard Creator. Need to cram for a test? Generate flashcards in a flash with Studyzap. Upload text, PDFs, or take a picture of your notes and generate custom flashcards with the power of AI.",
 };
-
 
 export default function RootLayout({ children }) {
   return (
