@@ -4,18 +4,13 @@ import { useEffect, useState } from "react";
 import { useUser, RedirectToSignIn } from "@clerk/nextjs";
 import { useSearchParams } from "next/navigation";
 import { collection, getDocs, doc } from "firebase/firestore";
-import {
-  Container,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Button,
-} from "@mui/material";
-
+import { Container, Grid, Card, CardActionArea, CardContent, Typography, Box, Button } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 export default function Flashcard() {
   const { isLoaded, isSignedIn, user } = useUser();
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+
   const [flashcards, setFlashcards] = useState([]);
   const [flipped, setFlipped] = useState({});
   const searchParams = useSearchParams();
@@ -25,17 +20,13 @@ export default function Flashcard() {
     async function getFlashcard() {
       if (!search || !user) return;
 
-      const colRef = collection(
-        doc(collection(db, "users"), user.id),
-        "flashcardSets",
-        search,
-        "cards"
-      );
+      // Construct the path dynamically based on `search` and user ID
+      const colRef = collection(doc(collection(db, "users"), user.id), "flashcardSets", search, "cards");
 
       try {
         const querySnapshot = await getDocs(colRef);
         const flashcards = [];
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(doc => {
           flashcards.push({ id: doc.id, ...doc.data() });
         });
         setFlashcards(flashcards);
@@ -46,148 +37,140 @@ export default function Flashcard() {
     getFlashcard();
   }, [search, user?.id]);
 
-  const handleCardClick = (id) => {
-    setFlipped((prev) => ({
+  const handleCardClick = id => {
+    setFlipped(prev => ({
       ...prev,
       [id]: !prev[id],
     }));
   };
 
   const handleNextClick = () => {
-    setCurrentCardIndex((prevIndex) =>
-      prevIndex === flashcards.length - 1 ? -1 : prevIndex + 1
-    );
+    setCurrentCardIndex(prevIndex => {
+      if (prevIndex === flashcards.length - 1) {
+        return -1;
+      } else {
+        return prevIndex + 1;
+      }
+    });
   };
-
-  const handleReset = () => {
+  const handleBackClick = () => {
+    setCurrentCardIndex(prevIndex => {
+      if (prevIndex === 0) {
+        return flashcards.length;
+      } else {
+        return prevIndex - 1;
+      }
+    });
+  };
+  const hanldeReset = () => {
     setCurrentCardIndex(0);
     setFlipped({});
   };
 
+  /* Should redirect to sign-in page if not logged in.
+                   Should show a loading indicator if not signed in. */
   if (!isLoaded || !isSignedIn) {
     return <RedirectToSignIn />;
   }
 
   const currentFlashcard = flashcards[currentCardIndex];
 
-  // New animation styles
-  const cardStyle = {
-    backgroundColor: "transparent",
-    width: "300px",
-    height: "300px",
-    perspective: "1000px",
-    cursor: "pointer",
-    margin: "0 auto",
-    borderRadius: "10px", // Added border radius
-    overflow: "hidden", // Ensures the border radius applies correctly
-  };
-
-  const innerCardStyle = {
-    position: "relative",
-    width: "100%",
-    height: "100%",
-    textAlign: "center",
-    transition: "transform 0.6s",
-    transformStyle: "preserve-3d",
-    transform: flipped[currentFlashcard?.id]
-      ? "rotateY(180deg)"
-      : "rotateY(0deg)",
-  };
-
-  const frontStyle = {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    backfaceVisibility: "hidden",
-    backgroundColor: "#fff", // Set consistent background color
-    color: "black", // Set consistent text color
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: "10px", // Added border radius
-    boxSizing: "border-box",
-  };
-
-  const backStyle = {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    backfaceVisibility: "hidden",
-    backgroundColor: "#fff", // Set consistent background color
-    color: "black", // Set consistent text color
-    transform: "rotateY(180deg)",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "10px",
-    borderRadius: "10px", // Added border radius
-    boxSizing: "border-box",
-  };
-
+  if (!currentFlashcard) {
+    return (
+      <Container>
+        <Typography variant="h3" component="h1" textAlign={"center"} mt={3} mb={3}>
+          Flashcard Set:{" "}
+          <Typography variant="span" component="span" textTransform={"capitalize"}>
+            {search}
+          </Typography>
+        </Typography>
+        <Grid
+          container
+          spacing={3}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Grid item xs={12} sm={8} md={8} key={1} sx={{ height: "500px" }}>
+            <Card>
+              <Box sx={{ cursor: "pointer" }}>
+                <CardContent>
+                  <Box
+                    sx={{
+                      perspective: "1000px",
+                      textAlign: "center",
+                      "& > div": {
+                        transition: "transform 0.6s",
+                        transformStyle: "preserve-3d",
+                        position: "relative",
+                        width: "100%",
+                        height: "300px",
+                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                      },
+                      "& > div > div": {
+                        position: "absolute",
+                        width: "100%",
+                        height: "100%",
+                        backfaceVisibility: "hidden",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: 2,
+                        boxSizing: "border-box",
+                      },
+                      "& > div > div:nth-of-type(2)": {
+                        transform: "rotateY(180deg)",
+                      },
+                    }}
+                  >
+                    <div>
+                      <div>
+                        <Typography variant="h3" component="div">
+                          You&apos;ve reached the end of the flashcards!
+                        </Typography>
+                      </div>
+                      <Button
+                        sx={{ position: "absolute", right: 0, bottom: 0, fontWeight: "bold" }}
+                        color="primary"
+                        onClick={hanldeReset}
+                      >
+                        Reset
+                      </Button>
+                    </div>
+                  </Box>
+                </CardContent>
+              </Box>
+            </Card>
+          </Grid>
+        </Grid>
+      </Container>
+    );
+  }
   return (
     <Container>
-      <Typography variant="h4" component="h1" textAlign="center">
+      <Typography variant="h3" component="h1" textAlign={"center"} mt={3} mb={3}>
         Flashcard Set:{" "}
-        <Typography variant="span" component="span" textTransform="capitalize">
+        <Typography variant="span" component="span" textTransform={"capitalize"}>
           {search}
         </Typography>
       </Typography>
-      {currentFlashcard ? (
-        <>
-          <Card
-            style={cardStyle}
-            onClick={() => handleCardClick(currentFlashcard.id)}
-          >
-            <div style={innerCardStyle}>
-              <div style={frontStyle}>
-                <Typography variant="h5" component="div">
-                  {currentFlashcard.front}
-                </Typography>
-              </div>
-              <div style={backStyle}>
-                <Typography variant="h5" component="div">
-                  {currentFlashcard.back}
-                </Typography>
-              </div>
-            </div>
-          </Card>
-          <Box
-            sx={{
-              mt: 2,
-              textAlign: "center",
-              maxWidth: "768px",
-            }}
-          >
-            <Button
-              sx={{ display: "block" }}
-              color="secondary"
-              onClick={handleNextClick}
-            >
-              Next
-            </Button>
-          </Box>
-        </>
-      ) : (
-        <Box
-          sx={{
-            textAlign: "center",
-            maxWidth: "768px",
-            mt: 2,
-          }}
-        >
+      <Grid
+        container
+        spacing={3}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <Grid item xs={12} sm={8} md={8} key={1} sx={{ height: "500px" }}>
           <Card>
-            <Box
-              sx={{
-                cursor: "pointer",
-                maxWidth: "768px",
-              }}
-            >
-              <CardContent
-                sx={{
-                  maxWidth: "768px",
-                }}
-              >
+            <Box onClick={() => handleCardClick(currentFlashcard.id)} sx={{ cursor: "pointer" }}>
+              <CardContent>
                 <Box
                   sx={{
                     perspective: "1000px",
@@ -197,16 +180,13 @@ export default function Flashcard() {
                       transformStyle: "preserve-3d",
                       position: "relative",
                       width: "100%",
-                      maxWidth: "768px",
-                      height: "40vh",
-                      backgroundColor: "#fff", // Set the background color of the card
-                      borderRadius: "10px", // Added border radius
-                      overflow: "hidden", // Ensures the border radius applies correctly
+                      height: "300px",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                      transform: flipped[currentFlashcard.id] ? "rotateY(180deg)" : "rotateY(0deg)",
                     },
                     "& > div > div": {
                       position: "absolute",
                       width: "100%",
-                      maxWidth: "768px",
                       height: "100%",
                       backfaceVisibility: "hidden",
                       display: "flex",
@@ -214,36 +194,48 @@ export default function Flashcard() {
                       alignItems: "center",
                       padding: 2,
                       boxSizing: "border-box",
-                      backgroundColor: "#fff", // Set the background color of the card faces
-                      color: "black", // Set the text color of the card faces
-                      borderRadius: "10px", // Added border radius
                     },
                     "& > div > div:nth-of-type(2)": {
                       transform: "rotateY(180deg)",
-                      maxWidth: "768px",
                     },
                   }}
                 >
-                  <div>
-                    <Typography variant="h5" component="div">
-                      You've reached the end of the flashcards!
-                    </Typography>
-                  </div>
+                  <Box>
+                    <div>
+                      <Typography variant="h5" component="div" sx={{ fontSize: "1.8rem" }}>
+                        {currentFlashcard.front}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography variant="h5" component="div" sx={{ fontSize: "1.8rem" }}>
+                        {currentFlashcard.back}
+                      </Typography>
+                    </div>
+                    {flipped[currentFlashcard.id] !== true && (
+                      <Box>
+                        <Button
+                          color="secondary"
+                          onClick={handleNextClick}
+                          sx={{ position: "absolute", right: "0", bottom: "0" }}
+                        >
+                          <ArrowForwardIcon />
+                        </Button>
+                        <Button
+                          color="secondary"
+                          onClick={handleBackClick}
+                          sx={{ position: "absolute", left: "0", bottom: "0" }}
+                        >
+                          <ArrowBackIcon />
+                        </Button>
+                      </Box>
+                    )}
+                  </Box>
                 </Box>
               </CardContent>
             </Box>
           </Card>
-          <Box sx={{ mt: 2, textAlign: "center" }}>
-            <Button
-              sx={{ fontWeight: "bold" }}
-              color="primary"
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
-          </Box>
-        </Box>
-      )}
+        </Grid>
+      </Grid>
     </Container>
   );
 }
