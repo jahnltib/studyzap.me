@@ -5,6 +5,7 @@ import { useUser, RedirectToSignIn } from "@clerk/nextjs";
 import { useSearchParams } from "next/navigation";
 import { collection, getDocs, doc } from "firebase/firestore";
 import { Container, Grid, Card, CardActionArea, CardContent, Typography, Box, Button } from "@mui/material";
+import { useRouter } from "next/navigation";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 export default function Flashcard() {
@@ -15,9 +16,19 @@ export default function Flashcard() {
   const [flipped, setFlipped] = useState({});
   const searchParams = useSearchParams();
   const search = searchParams.get("id");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) {
+      router.push("/");
+    }
+  }, []);
 
   useEffect(() => {
     async function getFlashcard() {
+      if (!isLoaded || !isSignedIn) {
+        return;
+      }
       if (!search || !user) return;
 
       // Construct the path dynamically based on `search` and user ID
@@ -70,7 +81,7 @@ export default function Flashcard() {
   /* Should redirect to sign-in page if not logged in.
                    Should show a loading indicator if not signed in. */
   if (!isLoaded || !isSignedIn) {
-    return <RedirectToSignIn />;
+    return; // return <RedirectToSignIn />;
   }
 
   const currentFlashcard = flashcards[currentCardIndex];

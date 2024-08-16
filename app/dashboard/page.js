@@ -5,18 +5,31 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { db } from "@/firebase";
 import { doc, collection, getDoc, setDoc } from "firebase/firestore";
-import { Box, Grid, Typography, IconButton, Card, CardActionArea, CardContent, Container, Modal, Button, List, ListItem } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  IconButton,
+  Card,
+  CardActionArea,
+  CardContent,
+  Container,
+  Modal,
+  Button,
+  List,
+  ListItem,
+} from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
-import StartIcon from '@mui/icons-material/Start';
-import PostAdd from '@mui/icons-material/PostAdd';
-import StyleIcon from '@mui/icons-material/Style';
+import StartIcon from "@mui/icons-material/Start";
+import PostAdd from "@mui/icons-material/PostAdd";
+import StyleIcon from "@mui/icons-material/Style";
 import { CameraEnhance, EditNote } from "@mui/icons-material";
 
 const boxData = [
-  { icon: <PostAdd sx={{ fontSize: 40 }} color="primary"/>, text: "Generate Flashcards", route: '/generate' },
-  { icon: <StyleIcon sx={{ fontSize: 40 }} color="primary"/>, text: "Practice Cards", route: '/practice-cards' },
-  { icon: <EditNote sx={{ fontSize: 40 }} color="grey"/>, text: "Manage/Edit Flashcards", route: '/preview' },
-  { icon: <CameraEnhance sx={{ fontSize: 40 }} color="grey"/>, text: "Take a Picture", route: '/preview' },
+  { icon: <PostAdd sx={{ fontSize: 40 }} color="primary" />, text: "Generate Flashcards", route: "/generate" },
+  { icon: <StyleIcon sx={{ fontSize: 40 }} color="primary" />, text: "Practice Cards", route: "/practice-cards" },
+  { icon: <EditNote sx={{ fontSize: 40 }} color="grey" />, text: "Manage/Edit Flashcards", route: "/preview" },
+  { icon: <CameraEnhance sx={{ fontSize: 40 }} color="grey" />, text: "Take a Picture", route: "/preview" },
 ];
 
 export default function Dashboard() {
@@ -25,6 +38,12 @@ export default function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedSet, setSelectedSet] = useState(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) {
+      router.push("/");
+    }
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -48,7 +67,7 @@ export default function Dashboard() {
   };
 
   const handleGridItemClick = route => {
-    if (route === '/practice-cards') {
+    if (route === "/practice-cards") {
       setModalOpen(true);
     } else {
       router.push(route);
@@ -81,7 +100,6 @@ export default function Dashboard() {
           p: 2,
         }}
       >
-
         {/* Library Display */}
         <Box
           sx={{
@@ -106,13 +124,13 @@ export default function Dashboard() {
           sx={{
             border: "1px solid transparent",
             width: "100%",
-            maxWidth: '768px',
+            maxWidth: "768px",
             height: "40vh",
             p: 2,
             mb: 2,
-            borderRadius: '10px',
+            borderRadius: "10px",
             bgcolor: "background.box",
-            overflow: 'auto', // Enable scrolling if needed
+            overflow: "auto", // Enable scrolling if needed
           }}
         >
           <Grid container direction="column" spacing={3}>
@@ -179,13 +197,13 @@ export default function Dashboard() {
                   justifyContent: "center",
                   textAlign: "center",
                   padding: 1,
-                  minWidth: 0,  // Ensure items do not expand beyond container
-                  maxWidth: '100%',
-                  flexBasis: 'calc(50% - 16px)', // Adjust for spacing
-                  boxSizing: 'border-box', // Include padding and border in width
+                  minWidth: 0, // Ensure items do not expand beyond container
+                  maxWidth: "100%",
+                  flexBasis: "calc(50% - 16px)", // Adjust for spacing
+                  boxSizing: "border-box", // Include padding and border in width
                   transition: "all 0.3s ease", // Smooth transition for hover effects
-                  '&:hover': {
-                    borderColor: 'primary.main',
+                  "&:hover": {
+                    borderColor: "primary.main",
                   },
                 }}
               >
@@ -200,19 +218,19 @@ export default function Dashboard() {
         <Modal
           open={modalOpen}
           onClose={handleModalClose}
-          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
         >
           <Box
             sx={{
-              border: '1px transparent',
+              border: "1px transparent",
               borderRadius: 2,
-              bgcolor: 'background.paper',
+              bgcolor: "background.paper",
               p: 4,
               width: 300,
               boxShadow: 24,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             <Typography variant="h6" component="div" mb={2}>
@@ -230,7 +248,6 @@ export default function Dashboard() {
             </Button>
           </Box>
         </Modal>
-
       </Box>
     </Container>
   );

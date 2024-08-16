@@ -20,9 +20,8 @@ export default function Flashcards() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("signed in", user, isSignedIn);
-    if (user) {
-      // router.push("/sign-in");
+    if (!isLoaded || !isSignedIn) {
+      router.push("/");
     }
   }, []);
 
@@ -43,7 +42,7 @@ export default function Flashcards() {
   }, [user]);
 
   if (!isLoaded || !isSignedIn) {
-    return <></>;
+    return;
   }
 
   const handleCardClick = id => {
