@@ -25,13 +25,10 @@ export default function Navbar() {
         <SignedIn>
           <UserButton />
           <Link href="/flashcards">
-            <Button
-              sx={{
-                color: " #016233ff",
-              }}
-            >
-              Flashcards
-            </Button>
+            <Button color="secondary">Flashcards</Button>
+          </Link>
+          <Link href="/generate">
+            <Button color="secondary">Generate</Button>
           </Link>
         </SignedIn>
       </Toolbar>
