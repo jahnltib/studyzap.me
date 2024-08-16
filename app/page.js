@@ -4,6 +4,7 @@ import React from "react";
 import { AppBar, Toolbar, Typography, Box, Button, Grid } from "@mui/material";
 import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
 import getStripe from "../utils/get-stripe";
+
 const Home = () => {
   const handleSubmit = async () => {
     try {
