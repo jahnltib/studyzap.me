@@ -36,24 +36,6 @@ const Home = () => {
 
   return (
     <div>
-      {/* <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            StudyZap
-          </Typography>
-          <SignedOut>
-            <Button color="inherit" href="/sign-in">
-              Login
-            </Button>
-            <Button color="inherit" href="/sign-up">
-              Sign Up
-            </Button>
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-        </Toolbar>
-      </AppBar> */}
       <Box sx={{ textAlign: "center", my: 4 }}>
         <Typography variant="h2" component="h1" gutterBottom>
           Welcome to StudyZap

@@ -9,16 +9,16 @@ export default function Navbar() {
   const { isSignedIn, user } = useUser();
   useEffect(() => {}, []);
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="primary">
       <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" sx={{ flexGrow: 1 }} color="secondary" fontWeight={"bold"}>
           StudyZap
         </Typography>
         <SignedOut>
-          <Button color="inherit" href="/sign-in">
+          <Button color="secondary" href="/sign-in">
             Login
           </Button>
-          <Button color="inherit" href="/sign-up">
+          <Button color="secondary" href="/sign-up">
             Sign Up
           </Button>
         </SignedOut>
@@ -30,7 +30,7 @@ export default function Navbar() {
                 color: " #016233ff",
               }}
             >
-              Dashboard
+              Flashcards
             </Button>
           </Link>
         </SignedIn>
