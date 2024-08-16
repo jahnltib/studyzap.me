@@ -6,6 +6,7 @@ import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
+import Image from "next/image";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -18,10 +19,7 @@ export default function Navbar() {
   useEffect(() => {}, []);
 
   return (
-    <AppBar 
-      position="static" 
-      color="customColor" 
-    >
+    <AppBar position="static" color="customColor">
       <Toolbar
         sx={{
           height: "50px !important",
@@ -31,16 +29,8 @@ export default function Navbar() {
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <img
-            src="/logobox.png"
-            alt="Logo"
-            style={{ height: "32px", marginRight: "8px" }}
-          />
-          <Typography
-            className={archivo.className}
-            variant="h5"
-            color="textPrimary"
-          >
+          <Image src="/logobox.png" alt="Logo" height={32} width={32} style={{ marginRight: "8px" }} />
+          <Typography className={archivo.className} variant="h5" color="textPrimary">
             studyzap
           </Typography>
         </Box>
@@ -56,13 +46,13 @@ export default function Navbar() {
           </SignedOut>
 
           <SignedIn>
-            <UserButton />
-            <Link href="/flashcards">
-              <Button color="secondary">Flashcards</Button>
+            <Link href="/dashboard">
+              <Button color="secondary">Dashboard</Button>
             </Link>
             <Link href="/generate">
               <Button color="secondary">Generate</Button>
             </Link>
+            <UserButton />
           </SignedIn>
         </Box>
       </Toolbar>
