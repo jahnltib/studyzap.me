@@ -1,18 +1,16 @@
 "use client";
 
-import React from 'react';
-import { AppBar, Toolbar, Typography, Box, Button, Grid } from '@mui/material';
-import { SignedOut, SignedIn, UserButton } from '@clerk/nextjs';
-import getStripe from '../utils/get-stripe';
-
+import React from "react";
+import { AppBar, Toolbar, Typography, Box, Button, Grid } from "@mui/material";
+import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
+import getStripe from "../utils/get-stripe";
 const Home = () => {
-
   const handleSubmit = async () => {
     try {
-      const checkoutSession = await fetch('/api/checkout_session', {
-        method: 'POST',
+      const checkoutSession = await fetch("/api/checkout_session", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
@@ -32,16 +30,16 @@ const Home = () => {
         console.error(error.message);
       }
     } catch (error) {
-      console.error('An unexpected error occurred:', error);
+      console.error("An unexpected error occurred:", error);
     }
   };
 
   return (
     <div>
-      <AppBar position="static">
+      {/* <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Flashcard SaaS
+            StudyZap
           </Typography>
           <SignedOut>
             <Button color="inherit" href="/sign-in">
@@ -55,20 +53,15 @@ const Home = () => {
             <UserButton />
           </SignedIn>
         </Toolbar>
-      </AppBar>
-      <Box sx={{ textAlign: 'center', my: 4 }}>
+      </AppBar> */}
+      <Box sx={{ textAlign: "center", my: 4 }}>
         <Typography variant="h2" component="h1" gutterBottom>
-          Welcome to Flashcard SaaS
+          Welcome to StudyZap
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
           The easiest way to create flashcards from your text.
         </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ mt: 2, mr: 2 }}
-          href="/generate"
-        >
+        <Button variant="contained" color="primary" sx={{ mt: 2, mr: 2 }} href="/generate">
           Get Started
         </Button>
         <Button variant="outlined" color="primary" sx={{ mt: 2 }}>
@@ -83,19 +76,14 @@ const Home = () => {
           {/* Feature items */}
         </Grid>
       </Box>
-      <Box sx={{ my: 6, textAlign: 'center' }}>
+      <Box sx={{ my: 6, textAlign: "center" }}>
         <Typography variant="h4" component="h2" gutterBottom>
           Pricing
         </Typography>
         <Grid container spacing={4} justifyContent="center">
           {/* Pricing plans */}
         </Grid>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ mt: 2 }}
-          onClick={handleSubmit}
-        >
+        <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleSubmit}>
           Subscribe Now
         </Button>
       </Box>
