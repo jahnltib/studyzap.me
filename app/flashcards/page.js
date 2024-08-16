@@ -16,17 +16,7 @@ import { Container, Grid, Card, CardActionArea, CardContent, Typography } from "
 
 export default function Flashcards() {
   const { isLoaded, isSignedIn, user } = useUser();
-  const [flashcards, setFlashcards] = useState([
-    {
-      name: "Flashcard 1",
-    },
-    {
-      name: "Flashcard 2",
-    },
-    {
-      name: "Flashcard 3",
-    },
-  ]);
+  const [flashcards, setFlashcards] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
