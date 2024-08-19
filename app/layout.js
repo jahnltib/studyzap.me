@@ -4,6 +4,7 @@ import { Archivo } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ThemeRegistry from "./ThemeRegistry";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 const archivo = Archivo({ subsets: ["latin"] });
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
           <ThemeRegistry>
             <Navbar />
             {children}
+            <Analytics />
           </ThemeRegistry>
         </body>
       </html>
