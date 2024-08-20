@@ -1,11 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { Archivo } from "next/font/google";
-import React, { useEffect } from "react";
+import React from "react";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
-import Link from "next/link";
 import Image from "next/image";
 
 const archivo = Archivo({
@@ -14,26 +14,46 @@ const archivo = Archivo({
 });
 
 export default function Navbar() {
-  const { isSignedIn, user } = useUser();
-
-  useEffect(() => {}, []);
+  const { isSignedIn } = useUser();
 
   return (
-    <AppBar position="static" color="customColor">
+    <AppBar position="static" color="customColor" textDecoration="none">
       <Toolbar
         sx={{
           height: "50px !important",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          textDecoration: "none",
+          
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Image src="/logobox.png" alt="Logo" height={32} width={32} style={{ marginRight: "8px" }} />
-          <Typography className={archivo.className} variant="h5" color="textPrimary">
-            studyzap
-          </Typography>
-        </Box>
+        <Link href="/" passHref style={{ textDecoration: 'none' }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none", // Ensure no underline
+              color: "inherit", // Ensure text color inherits
+            }}
+          >
+            <Image
+              src="/logobox.png"
+              alt="Logo"
+              height={32}
+              width={32}
+              style={{ marginRight: "8px" }}
+            />
+            <Typography
+              className={archivo.className}
+              variant="h5"
+              color="textPrimary"
+              textDecoration="none"
+            >
+              studyzap
+            </Typography>
+          </Box>
+        </Link>
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <SignedOut>
@@ -46,10 +66,10 @@ export default function Navbar() {
           </SignedOut>
 
           <SignedIn>
-            <Link href="/dashboard">
+            <Link href="/dashboard" passHref>
               <Button color="secondary">Dashboard</Button>
             </Link>
-            <Link href="/generate">
+            <Link href="/generate" passHref>
               <Button color="secondary">Generate</Button>
             </Link>
             <UserButton />

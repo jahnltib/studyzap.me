@@ -10,3 +10,7 @@
   --white-2: #fcfcfcff;
   --mimi-pink: #ffdafcff;
 }
+
+.noUnderline {
+  text-decoration: none;
+}
