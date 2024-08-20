@@ -32,11 +32,11 @@ export default function Edit() {
   const [editCard, setEditCard] = useState(null);
   const [text, setText] = useState("");
   const router = useRouter();
-  //   useEffect(() => {
-  //     if (!isLoaded || !isSignedIn) {
-  //       router.push("/");
-  //     }
-  //   }, []);
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) {
+      router.push("/");
+    }
+  }, []);
 
   useEffect(() => {
     if (user) {
