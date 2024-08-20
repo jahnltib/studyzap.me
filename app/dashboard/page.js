@@ -25,13 +25,13 @@ import StartIcon from "@mui/icons-material/Start";
 import PostAdd from "@mui/icons-material/PostAdd";
 import StyleIcon from "@mui/icons-material/Style";
 import { AutoAwesome, EditNote } from "@mui/icons-material";
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 
 const boxData = [
   { icon: <PostAdd sx={{ fontSize: 40 }} color="primary" />, text: "Generate Flashcards", route: "/generate" },
   { icon: <StyleIcon sx={{ fontSize: 40 }} color="primary" />, text: "Practice Cards", route: "/practice-cards" },
-  { icon: <EditNote sx={{ fontSize: 40 }} color="grey" />, text: "Manage/Edit Flashcards", route: "/preview" },
-  { icon: <AutoAwesomeIcon sx={{ fontSize: 40, color: '#FFD700' }} />, text: "Unlock Premium", route: "/preview" },
+  { icon: <EditNote sx={{ fontSize: 40 }} color="grey" />, text: "Manage/Edit Flashcards", route: "/edit" },
+  { icon: <AutoAwesomeIcon sx={{ fontSize: 40, color: "#FFD700" }} />, text: "Unlock Premium", route: "/preview" },
 ];
 
 export default function Dashboard() {
@@ -198,6 +198,7 @@ export default function Dashboard() {
                   alignItems: "center",
                   justifyContent: "center",
                   textAlign: "center",
+                  cursor: "pointer",
                   padding: 1,
                   minWidth: 0, // Ensure items do not expand beyond container
                   maxWidth: "100%",

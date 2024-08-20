@@ -49,8 +49,8 @@ export default function Generate() {
     }
   };
 
-  const handleCardClick = (id) => {
-    setFlipped((prev) => ({
+  const handleCardClick = id => {
+    setFlipped(prev => ({
       ...prev,
       [id]: !prev[id],
     }));
@@ -69,23 +69,21 @@ export default function Generate() {
       alert("Please enter a name for your flashcard set.");
       return;
     }
-  
-    const validFlashcards = flashcards.filter(
-      (card) => card.front && card.back
-    );
-  
+
+    const validFlashcards = flashcards.filter(card => card.front && card.back);
+
     if (validFlashcards.length === 0) {
       alert("No valid flashcards to save.");
       return;
     }
-  
+
     const batch = writeBatch(db);
     const userDocRef = doc(db, "users", user.id);
     const docSnap = await getDoc(userDocRef);
 
     if (docSnap.exists()) {
       const collections = docSnap.data().flashcards || [];
-      if (collections.find((f) => f.name === name)) {
+      if (collections.find(f => f.name === name)) {
         alert("A collection with that name already exists");
         return;
       } else {
@@ -98,14 +96,14 @@ export default function Generate() {
 
     // Fix: Create a subcollection reference correctly
     const colRef = collection(db, `users/${user.id}/flashcardSets/${name}/cards`);
-    flashcards.forEach((flashcard) => {
+    flashcards.forEach(flashcard => {
       const cardDocRef = doc(colRef); // Use the collection reference to create a new document
       batch.set(cardDocRef, flashcard); // Set the flashcard data in the new document
     });
 
     await batch.commit();
     handleClose();
-    router.push("/flashcards");
+    router.push("/dashboard");
   };
 
   return (
@@ -132,15 +130,10 @@ export default function Generate() {
             rows={4}
             fullWidth
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={e => setText(e.target.value)}
             sx={{ mb: 2 }}
           />
-          <Button
-            onClick={handleSubmit}
-            variant="contained"
-            color="primary"
-            fullWidth
-          >
+          <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
             Generate
           </Button>
         </Paper>
@@ -167,9 +160,7 @@ export default function Generate() {
                             width: "100%",
                             height: "200px",
                             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                            transform: flipped[index]
-                              ? "rotateY(180deg)"
-                              : "rotateY(0deg)",
+                            transform: flipped[index] ? "rotateY(180deg)" : "rotateY(0deg)",
                           },
                           "& > div > div": {
                             position: "absolute",
@@ -217,9 +208,7 @@ export default function Generate() {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Save Flashcards</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Enter a name for your flashcard set
-          </DialogContentText>
+          <DialogContentText>Enter a name for your flashcard set</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -227,7 +216,7 @@ export default function Generate() {
             type="text"
             fullWidth
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
             variant="outlined"
           ></TextField>
           <DialogActions>
