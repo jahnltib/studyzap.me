@@ -6,7 +6,6 @@ import BuildIcon from '@mui/icons-material/Build';
 import axios from "axios";
 
 export default function ComingSoon() {
-  const [premiumStatus, setPremiumStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -15,9 +14,9 @@ export default function ComingSoon() {
     setError(null);
     try {
       const response = await axios.get("/api/premium");
-      setPremiumStatus(response.data.premium);
+      console.log("Private Metadata:", response.data);
     } catch (err) {
-      setError("Failed to fetch premium status.");
+      setError("Failed to fetch private metadata.");
     } finally {
       setLoading(false);
     }
@@ -68,11 +67,6 @@ export default function ComingSoon() {
         </Button>
         {loading && <Typography variant="body1">Loading...</Typography>}
         {error && <Typography variant="body1" color="error">{error}</Typography>}
-        {premiumStatus !== null && (
-          <Typography variant="body1" sx={{ mt: 2 }}>
-            {premiumStatus ? "You have a premium account." : "You do not have a premium account."}
-          </Typography>
-        )}
       </Container>
     </Box>
   );
