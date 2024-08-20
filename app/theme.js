@@ -19,6 +19,9 @@ const theme = createTheme({
     text: {
       primary: "#333333",
     },
+    premium: {
+      main:"FFFF00"
+    },
   },
   typography: {
     h1: {

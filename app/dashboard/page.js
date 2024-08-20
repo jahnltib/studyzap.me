@@ -1,5 +1,6 @@
 "use client";
 
+import theme from "../theme";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
@@ -23,13 +24,14 @@ import InboxIcon from "@mui/icons-material/Inbox";
 import StartIcon from "@mui/icons-material/Start";
 import PostAdd from "@mui/icons-material/PostAdd";
 import StyleIcon from "@mui/icons-material/Style";
-import { CameraEnhance, EditNote } from "@mui/icons-material";
+import { AutoAwesome, EditNote } from "@mui/icons-material";
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 const boxData = [
   { icon: <PostAdd sx={{ fontSize: 40 }} color="primary" />, text: "Generate Flashcards", route: "/generate" },
   { icon: <StyleIcon sx={{ fontSize: 40 }} color="primary" />, text: "Practice Cards", route: "/practice-cards" },
   { icon: <EditNote sx={{ fontSize: 40 }} color="grey" />, text: "Manage/Edit Flashcards", route: "/preview" },
-  { icon: <CameraEnhance sx={{ fontSize: 40 }} color="grey" />, text: "Take a Picture", route: "/preview" },
+  { icon: <AutoAwesomeIcon sx={{ fontSize: 40, color: '#FFD700' }} />, text: "Unlock Premium", route: "/preview" },
 ];
 
 export default function Dashboard() {
