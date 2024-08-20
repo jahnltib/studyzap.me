@@ -118,9 +118,10 @@ export default function Generate() {
           justifyContent: "center",
           flexDirection: "column",
           alignItems: "center",
+          marginTop: "30px",
         }}
       >
-        <Typography variant="h4" component="h1">
+        <Typography variant="h4" component="h1" marginBottom={"20px"}>
           Generate Flashcards
         </Typography>
         <Paper sx={{ p: 4, width: "100%" }}>
@@ -147,7 +148,7 @@ export default function Generate() {
 
       {flashcards.length > 0 && (
         <Box sx={{ mt: 4 }}>
-          <Typography variant="h4" component="h1">
+          <Typography variant="h4" component="h1" marginBottom="20px">
             Flashcards Preview
           </Typography>
           <Grid container spacing={3}>
