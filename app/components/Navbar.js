@@ -65,7 +65,7 @@ export default function Navbar() {
 
           <SignedIn>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Link href="/subcription" passHref>
+              <Link href="/preview" passHref>
               <Badge
                       badgeContent={isPremium ? "PREMIUM" : "BASIC"}
                       color={isPremium ? "success" : "secondary"}
