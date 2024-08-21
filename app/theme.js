@@ -20,7 +20,7 @@ const theme = createTheme({
       primary: "#333333",
     },
     premium: {
-      main:"FFFF00"
+      main:"FFFF00",
     },
   },
   typography: {

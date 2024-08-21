@@ -1,20 +1,15 @@
-import { Inter } from "next/font/google";
-import { Archivo } from "next/font/google";
+// app/layout.js
+import { Inter } from 'next/font/google';
+import { Archivo } from 'next/font/google';
+import './globals.css';
+import { ClerkProvider } from '@clerk/nextjs';
+import ThemeRegistry from './ThemeRegistry';
+import { Analytics } from '@vercel/analytics/react';
+import Navbar from './components/Navbar';
+import { UserProvider } from './context/UserContext'; // Import the UserProvider
 
-import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-import ThemeRegistry from "./ThemeRegistry";
-import { Analytics } from "@vercel/analytics/react";
-
-const inter = Inter({ subsets: ["latin"] });
-const archivo = Archivo({ subsets: ["latin"] });
-
-import Navbar from "./components/Navbar";
-export const metadata = {
-  title: "AI Flashcards - StudyZap",
-  description:
-    "AI Flashcard Creator. Need to cram for a test? Generate flashcards in a flash with Studyzap. Upload text, PDFs, or take a picture of your notes and generate custom flashcards with the power of AI.",
-};
+const inter = Inter({ subsets: ['latin'] });
+const archivo = Archivo({ subsets: ['latin'] });
 
 export default function RootLayout({ children }) {
   return (
@@ -22,8 +17,10 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={inter.variable}>
           <ThemeRegistry>
-            <Navbar />
-            {children}
+            <UserProvider> {/* Wrap with UserProvider */}
+              <Navbar />
+              {children}
+            </UserProvider>
             <Analytics />
           </ThemeRegistry>
         </body>

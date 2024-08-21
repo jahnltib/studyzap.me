@@ -1,40 +1,38 @@
 "use client";
 
-import Link from "next/link";
-import { Archivo } from "next/font/google";
-import React from "react";
-import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import React from 'react';
+import Link from 'next/link';
+import { Archivo } from 'next/font/google';
+import { AppBar, Toolbar, Typography, Button, Box, Badge } from "@mui/material";
 import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
-import { useUser } from "@clerk/nextjs";
-import Image from "next/image";
+import { useUserContext } from '../context/UserContext'; // Import the useUserContext hook
+import Image from 'next/image';
 
 const archivo = Archivo({
-  subsets: ["latin"],
-  weight: ["800"],
+  subsets: ['latin'],
+  weight: ['800'],
 });
 
 export default function Navbar() {
-  const { isSignedIn } = useUser();
+  const { isPremium } = useUserContext(); // Use the context hook
 
   return (
-    <AppBar position="static" color="customColor" textDecoration="none">
+    <AppBar position="static" color="customColor">
       <Toolbar
         sx={{
           height: "50px !important",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          textDecoration: "none",
-          
         }}
       >
-        <Link href="/" passHref style={{ textDecoration: 'none' }}>
+        <Link href="/" passHref style={{ textDecoration: "none" }}>
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              textDecoration: "none", // Ensure no underline
-              color: "inherit", // Ensure text color inherits
+              textDecoration: "none",
+              color: "inherit",
             }}
           >
             <Image
@@ -66,13 +64,32 @@ export default function Navbar() {
           </SignedOut>
 
           <SignedIn>
-            <Link href="/dashboard" passHref>
-              <Button color="secondary">Dashboard</Button>
-            </Link>
-            <Link href="/generate" passHref>
-              <Button color="secondary">Generate</Button>
-            </Link>
-            <UserButton />
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Link href="/subcription" passHref>
+              <Badge
+                      badgeContent={isPremium ? "PREMIUM" : "BASIC"}
+                      color={isPremium ? "success" : "secondary"}
+                      sx={{
+                        marginRight: "55px", // Adjust the margin as needed
+                        ".MuiBadge-dot": {
+                          padding: "10px", // Adjust the padding of the badge content
+                        },
+                        ".MuiBadge-badge": {
+                          padding: "16px 14px", // Adjust the padding of the badge container
+                        },
+                      }}
+                    />
+                </Link>
+              <Link href="/dashboard" passHref>
+                <Button color="secondary">
+                  Dashboard
+                </Button>
+              </Link>
+              <Link href="/generate" passHref>
+                <Button color="secondary">Generate</Button>
+              </Link>
+              <UserButton />
+            </Box>
           </SignedIn>
         </Box>
       </Toolbar>

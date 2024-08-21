@@ -14,7 +14,7 @@ const Home = () => {
           Welcome to StudyZap
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
-          The easiest way to create flashcards from your text.
+          Generate up to 50 flashcards with the power of AI in seconds.
         </Typography>
         <Box
           sx={{
@@ -140,7 +140,7 @@ const Home = () => {
               variant="contained"
               color="primary"
               sx={{ mt: 4 }}
-              href="/generate"
+              href="/sign-up"
             >
               Get Started
             </Button>
