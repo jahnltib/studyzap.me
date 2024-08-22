@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React from "react";
 import { Box, Container, Typography } from "@mui/material";
 import BuildIcon from "@mui/icons-material/Build";
 
@@ -36,7 +36,7 @@ export default function ComingSoon() {
           Coming Soon
         </Typography>
         <Typography variant="body1" gutterBottom>
-          We're working hard to bring you this feature. Stay tuned!
+          We&apos;re working hard to bring you this feature. Stay tuned!
         </Typography>
       </Container>
     </Box>

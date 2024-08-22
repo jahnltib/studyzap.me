@@ -45,7 +45,7 @@ export default function Dashboard() {
     if (!isLoaded || !isSignedIn) {
       router.push("/");
     }
-  }, []);
+  }, [isLoaded, isSignedIn, router]); // Added missing dependencies
 
   useEffect(() => {
     if (user) {
@@ -62,7 +62,7 @@ export default function Dashboard() {
       }
       getFlashcards();
     }
-  }, [user]);
+  }, [user]); // Ensure user is in the dependency array
 
   const handleCardClick = id => {
     router.push(`/flashcard?id=${id}`);

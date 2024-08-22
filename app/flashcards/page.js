@@ -23,7 +23,7 @@ export default function Flashcards() {
     if (!isLoaded || !isSignedIn) {
       router.push("/");
     }
-  }, []);
+  }, [isLoaded, isSignedIn, router]);
 
   useEffect(() => {
     async function getFlashcards() {

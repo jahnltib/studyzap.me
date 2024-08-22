@@ -36,7 +36,7 @@ export default function Edit() {
     if (!isLoaded || !isSignedIn) {
       router.push("/");
     }
-  }, []);
+  }, [isLoaded, isSignedIn, router]);
 
   useEffect(() => {
     if (user) {
